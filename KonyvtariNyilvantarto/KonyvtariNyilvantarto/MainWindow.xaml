@@ -1,0 +1,118 @@
+﻿<Window x:Name="MainWindow1" x:Class="KonyvtariNyilvantarto.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Könyvtári Nyilvántartó" Height="700" Width="1200" ResizeMode="NoResize" Background="White" Closing="MainWindow_Closing">
+    <Grid>
+        <Label Content="Könyvtári nyilvántartó" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="45" Width="400" FontSize="24" FontWeight="Bold"/>
+        <Button x:Name="MindenMenteseButton" Content="Minden változás mentése" HorizontalAlignment="Left" Margin="875,10,0,0" VerticalAlignment="Top" Width="300" Height="45" FontSize="24" IsEnabled="False" Click="MindenMenteseButton_Click"/>
+        <TabControl x:Name="TabControl" HorizontalAlignment="Left" Height="595" Margin="5,60,0,0" VerticalAlignment="Top" Width="1170">
+            <TabItem x:Name="KonyvekTabElement" Header="Könyvek Listája">
+                <Grid Background="White">
+                    <DataGrid x:Name="Konyvek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Konyvek_CellEditEnding" Loaded="Konyvek_Loaded">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="KonyvIDColumn" Binding="{Binding KonyvID}" Header="ID" SortDirection="Ascending" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KonyvSzerzoColumn" Binding="{Binding KonyvSzerzo}" Header="Szerző" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KonyvCimeColumn" Binding="{Binding KonyvCime}" Header="Cím" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KonyvKiadasEveColumn" Binding="{Binding KonyvKiadasEve}" Header="Kiadás éve" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KonyvKiadoColumn" Binding="{Binding KonyvKiado}" Header="Kiadó" CanUserReorder="False"/>
+                            <DataGridCheckBoxColumn x:Name="KonyvKolcsonozhetoColumn" Binding="{Binding KonyvKolcsonozheto}" Header="Kölcsönözhető" CanUserReorder="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Új könyv hozzáadása" HorizontalAlignment="Left" Margin="815,21,0,0" VerticalAlignment="Top" Height="45" Width="245" FontSize="24"/>
+                    <Label Content="Szerző" HorizontalAlignment="Left" Margin="815,71,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KonyvSzerzoBox" HorizontalAlignment="Left" Height="25" Margin="815,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="15" TextChanged="KonyvSzerzoBox_TextChanged"/>
+                    <Label Content="Cím" HorizontalAlignment="Left" Margin="815,132,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KonyvCimBox" HorizontalAlignment="Left" Height="25" Margin="815,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="15" TextChanged="KonyvCimBox_TextChanged"/>
+                    <Label Content="Kiadás éve" HorizontalAlignment="Left" Margin="815,193,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KonyvKiadasEveBox" HorizontalAlignment="Left" Height="25" Margin="815,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="15" TextChanged="KonyvKiadasEveBox_TextChanged"/>
+                    <Label Content="Kiadó" HorizontalAlignment="Left" Margin="815,254,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KonyvKiadoBox" HorizontalAlignment="Left" Height="25" Margin="815,285,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="15" TextChanged="KonyvKiadoBox_TextChanged"/>
+                    <Label Content="Kölcsönözhető" HorizontalAlignment="Left" Margin="815,315,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="KonyvKolcsonozhetoCheck" Content="" HorizontalAlignment="Left" Margin="1138,320,0,0" VerticalAlignment="Top" Width="16" IsChecked="True"/>
+                    <Button x:Name="KonyvHozzaadasaButton" Content="Hozzáadás" HorizontalAlignment="Left" Margin="815,346,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="KonyvHozzaadasaButton_Click"/>
+                    <Button x:Name="KonyvHozzaadasaMegseGomb" Content="Mégse" HorizontalAlignment="Left" Margin="895,346,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="KonyvHozzaadasaMegseGomb_Click"/>
+                    <Button x:Name="KonyvTorleseGomb" Content="Kijelölt könyv törlése" HorizontalAlignment="Left" Margin="815,400,0,0" VerticalAlignment="Top" Width="155" Height="35" FontSize="15" IsEnabled="False" Click="KonyvTorleseGomb_Click"/>
+                    <Button x:Name="KonyvekMenteseButton" Content="Változások mentése" HorizontalAlignment="Left" Margin="815,501,0,0" VerticalAlignment="Top" Width="219" Height="50" FontSize="20" IsEnabled="False" Click="KonyvekMenteseButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="KolcsonzokTabElement" Header="Kölcsönzők listája">
+                <Grid Background="White">
+                    <DataGrid x:Name="Kolcsonzok" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Kolcsonzok_CellEditEnding" Loaded="Kolcsonzok_Loaded">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="OlvasoIDColumn" Binding="{Binding OlvasoID}" Header="ID" SortDirection="Ascending" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="OlvasoNevColumn" Binding="{Binding OlvasoNev}" Header="Név" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="OlvasoSzulDatumColumn" Binding="{Binding OlvasoSzulDatum}" Header="Születési dátum" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="OlvasoIrSzColumn" Binding="{Binding OlvasoIranyitoSzam}" Header="Irányítószám" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="OlvasoTelepulesColumn" Binding="{Binding OlvasoTelepules}" Header="Település" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="OlvasoUtHszColumn" Binding="{Binding OlvasoUtcaHazszam}" Header="Utca, házszám" CanUserReorder="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Új kölcsönző regisztrálása" HorizontalAlignment="Left" Margin="815,21,0,0" VerticalAlignment="Top" FontSize="24"/>
+                    <Label Content="Név" HorizontalAlignment="Left" Margin="815,68,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzoNevBox" HorizontalAlignment="Left" Height="25" Margin="954,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="15" TextChanged="KolcsonzoNevBox_TextChanged"/>
+                    <Label Content="Születési dátum" HorizontalAlignment="Left" Margin="815,99,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzoSzuletesBox" HorizontalAlignment="Left" Height="25" Margin="954,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="15" TextChanged="KolcsonzoSzuletesBox_TextChanged"/>
+                    <Label Content="Irányítószám" HorizontalAlignment="Left" Margin="815,130,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzoIranyitoszamBox" HorizontalAlignment="Left" Height="25" Margin="954,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="15" TextChanged="KolcsonzoIranyitoszamBox_TextChanged"/>
+                    <Label Content="Település" HorizontalAlignment="Left" Margin="815,161,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzoTelepulesBox" HorizontalAlignment="Left" Height="25" Margin="954,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="15" TextChanged="KolcsonzoTelepulesBox_TextChanged"/>
+                    <Label Content="Utca, házszám" HorizontalAlignment="Left" Margin="815,192,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzoUtcaBox" HorizontalAlignment="Left" Height="25" Margin="954,193,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="15" TextChanged="KolcsonzoUtcaBox_TextChanged"/>
+                    <Button x:Name="KolcsonzoFelvetelButton" Content="Regisztrálás" HorizontalAlignment="Left" Margin="815,223,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="KolcsonzoFelvetelButton_Click"/>
+                    <Button x:Name="KolcsonzoFelvetelMegseButton" Content="Mégse" HorizontalAlignment="Left" Margin="905,223,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="KolcsonzoFelvetelMegseButton_Click"/>
+                    <Button x:Name="KolcsonzoTorleseButton" Content="Kijelölt kölcsönző eltávolítása" HorizontalAlignment="Left" Margin="815,285,0,0" VerticalAlignment="Top" Width="230" Height="40" IsEnabled="False" Click="KolcsonzoTorleseButton_Click"/>
+                    <Button x:Name="KolcsonzoKolcsonzeseiButton" Content="Kijelölt kölcsönző kölcsönzött könyvei" HorizontalAlignment="Left" Margin="815,365,0,0" VerticalAlignment="Top" Width="230" Height="40" IsEnabled="False" Click="KolcsonzoKolcsonzeseiButton_Click"/>
+                    <Button x:Name="KolcsonzokMenteseButton" Content="Változások mentése" HorizontalAlignment="Left" Margin="815,501,0,0" VerticalAlignment="Top" Width="220" Height="50" FontSize="20" IsEnabled="False" Click="KolcsonzokMenteseButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="KolcsonzesekTabElement" Header="Kölcsönzések listája">
+                <Grid Background="White">
+                    <DataGrid x:Name="Kolcsonzesek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Kolcsonzesek_CellEditEnding" Loaded="Kolcsonzesek_Loaded">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn x:Name="KolcsonzesIDColumn" Binding="{Binding KolcsonzesID}" Header="Kölcsönzés ID-je" SortDirection="Ascending" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KolcsonzesOlvIDColumn" Binding="{Binding OlvasoID}" Header="Kölcsönző ID-je" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KolcsonzesKonyvIDColumn" Binding="{Binding KonyvID}" Header="Könyv ID-je" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KolcsonzesDatumaColumn" Binding="{Binding KolcsonzesDatuma}" Header="Kölcsönzés dátuma" CanUserReorder="False"/>
+                            <DataGridTextColumn x:Name="KolcsonzesVisszaColumn" Binding="{Binding VisszavetelDatuma}" Header="Könyv visszaadásának dátuma" CanUserReorder="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Új kölcsönzés" HorizontalAlignment="Left" Margin="815,21,0,0" VerticalAlignment="Top" FontSize="24"/>
+                    <Label Content="Kölcsönzött könyv ID-je" HorizontalAlignment="Left" Margin="815,68,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzesKonyvIDBox" HorizontalAlignment="Left" Height="25" Margin="1004,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" FontSize="15" TextChanged="KolcsonzesKonyvIDBox_TextChanged"/>
+                    <Label Content="Kölcsönző ID-je" HorizontalAlignment="Left" Margin="815,99,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KolcsonzesKolcsonzoIDBox" HorizontalAlignment="Left" Height="25" Margin="1004,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" FontSize="15" TextChanged="KolcsonzesKolcsonzoIDBox_TextChanged"/>
+                    <Button x:Name="KolcsonzesFelveteleButton" Content="Felvétel" HorizontalAlignment="Left" Margin="815,130,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="KolcsonzesFelveteleButton_Click"/>
+                    <Button x:Name="KolcsonzesFelveteleMegseButton" Content="Mégse" HorizontalAlignment="Left" Margin="895,130,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="KolcsonzesFelveteleMegseButton_Click"/>
+                    <Button x:Name="KolcsonzesTorleseButton" Content="Kijelölt, hibás kölcsönzés törlése" HorizontalAlignment="Left" Margin="815,200,0,0" VerticalAlignment="Top" Width="230" Height="45" FontSize="15" IsEnabled="False" Click="KolcsonzesTorleseButton_Click"/>
+                    <Button x:Name="KolcsonzesekMenteseButton" Content="Változások mentése" HorizontalAlignment="Left" Margin="815,300,0,0" VerticalAlignment="Top" Width="230" Height="50" FontSize="20" IsEnabled="False" Click="KolcsonzesekMenteseButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="KeresesTabElement" Header="Keresés">
+                <Grid Background="White">
+                    <DataGrid x:Name="Kereses" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="True" CanUserResizeRows="False" IsEnabled="False"/>
+                    <Label Content="Keresés" HorizontalAlignment="Left" Margin="815,21,0,0" VerticalAlignment="Top" FontSize="24"/>
+                    <RadioButton x:Name="KonyvekRadio" Content="Könyvek keresése" HorizontalAlignment="Left" Margin="815,80,0,0" VerticalAlignment="Top" GroupName="KeresesTipusa" Checked="KonyvekRadio_Checked"/>
+                    <RadioButton x:Name="CimRadio" Content="cím" HorizontalAlignment="Left" Margin="840,115,0,0" VerticalAlignment="Top" GroupName="konyvek" IsEnabled="False" Checked="CimRadio_Checked"/>
+                    <RadioButton x:Name="SzerzoRadio" Content="szerző" HorizontalAlignment="Left" Margin="920,115,0,0" VerticalAlignment="Top" GroupName="konyvek" IsEnabled="False" Checked="SzerzoRadio_Checked"/>
+                    <Label Content="alapján" HorizontalAlignment="Left" Margin="1010,109,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="KonyvekKeresesBox" HorizontalAlignment="Left" Height="25" Margin="840,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314" FontSize="15" IsEnabled="False" TextChanged="KonyvekKeresesBox_TextChanged"/>
+                    <RadioButton x:Name="KolcsonzokRadio" Content="Adott ID-jű kölcsönző kölcsönzései" HorizontalAlignment="Left" Margin="815,240,0,0" VerticalAlignment="Top" GroupName="KeresesTipusa" Checked="KolcsonzokRadio_Checked"/>
+                    <TextBox x:Name="KolcsonzokKeresesBox" HorizontalAlignment="Left" Height="25" Margin="815,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="15" IsEnabled="False" TextChanged="KolcsonzokKeresesBox_TextChanged"/>
+                    <Button x:Name="KeresesButton" Content="Keresés" HorizontalAlignment="Left" Margin="815,335,0,0" VerticalAlignment="Top" Width="110" Height="50" FontSize="18" IsEnabled="False" Click="KeresesButton_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="LejartTabElement" Header="Lejárt kölcsönzések">
+                <Grid Background="White">
+                    <DataGrid x:Name="LejartKolcsonzesek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="True" CanUserResizeRows="False" IsEnabled="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding LejartKolcsonzesID}" Header="Kölcsönzés ID-je" SortDirection="Ascending" CanUserReorder="False"/>
+                            <DataGridTextColumn Binding="{Binding LejartOlvasoID}" Header="Kölcsönző ID-je" CanUserReorder="False"/>
+                            <DataGridTextColumn Binding="{Binding LejartKonyvID}" Header="Könyv ID-je" CanUserReorder="False"/>
+                            <DataGridTextColumn Binding="{Binding LejartKolcsonzesDatuma}" Header="Kölcsönzés dátuma" CanUserReorder="False"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <TextBlock HorizontalAlignment="Left" Margin="815,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="49" Width="339"><Run Text="Egy kölcsönzés"/><Run Text=" akkor"/><Run Text=" jár le, ha harminc napja lett kiadva a könyv, és még nem lett visszaadva."/><Run Text=" Ez a lista automatikusan bővül."/></TextBlock>
+                    <Label Content="Lejárt kölcsönzések" HorizontalAlignment="Left" Margin="815,21,0,0" VerticalAlignment="Top" FontSize="24"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>
