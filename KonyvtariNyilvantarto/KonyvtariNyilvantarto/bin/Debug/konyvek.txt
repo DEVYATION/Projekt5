@@ -1,4 +1,4 @@
-1;;Kassák Lajos összes versei / [sajtó alá rendezte és az utószót írta Kassák Lajosné], 1. köt.;1969;;True
+1;Kassák Lajos;Kassák Lajos összes versei / [sajtó alá rendezte és az utószót írta Kassák Lajosné], 1. köt.;1969;;True
 2;;3 perces mesék Micimackóról;2006;Egmont-Hungary;True
 3;C?ehov, Anton Pavlovic? (1860-1904);A 6-os számú kórterem és más írások;1994;Holnap;True
 4;;7x7 híres mai magyar regény;1997;Móra;True
@@ -7000,4 +7000,4 @@
 7000;Karczag György (1941-1978);Zúgó nyilak : történelmi regény;1970;Móra Kiadó;True
 7001;S?ikl, Jaroslav;Zuhanás;1984;Európa Madách;True
 7002;Zelk, Zoltán (1906-1981);Zúzmara a rózsafán : : válogatott versek;1964;Szépirodalmi Kiadó;True
-7003;aaa;bbb;2000;ccccc;True
+7004;Boross Máté;Programozási rémálmok, első rész;2021;Könyvmolyképző;True

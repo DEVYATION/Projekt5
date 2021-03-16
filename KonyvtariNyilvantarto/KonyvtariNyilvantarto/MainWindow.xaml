@@ -5,7 +5,7 @@
         <TabControl x:Name="TabControl" HorizontalAlignment="Left" Height="595" Margin="5,60,0,0" VerticalAlignment="Top" Width="1170">
             <TabItem x:Name="KonyvekTabElement" Header="Könyvek Listája">
                 <Grid Background="White">
-                    <DataGrid x:Name="Konyvek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Konyvek_CellEditEnding" Loaded="Konyvek_Loaded">
+                    <DataGrid x:Name="Konyvek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Konyvek_CellEditEnding" SelectionChanged="Konyvek_SelectionChanged" CanUserDeleteRows="False" CanUserAddRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="KonyvIDColumn" Binding="{Binding KonyvID}" Header="ID" SortDirection="Ascending" CanUserReorder="False"/>
                             <DataGridTextColumn x:Name="KonyvSzerzoColumn" Binding="{Binding KonyvSzerzo}" Header="Szerző" CanUserReorder="False"/>
@@ -34,7 +34,7 @@
             </TabItem>
             <TabItem x:Name="KolcsonzokTabElement" Header="Kölcsönzők listája">
                 <Grid Background="White">
-                    <DataGrid x:Name="Kolcsonzok" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Kolcsonzok_CellEditEnding" Loaded="Kolcsonzok_Loaded">
+                    <DataGrid x:Name="Kolcsonzok" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Kolcsonzok_CellEditEnding" SelectionChanged="Kolcsonzok_SelectionChanged" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="OlvasoIDColumn" Binding="{Binding OlvasoID}" Header="ID" SortDirection="Ascending" CanUserReorder="False"/>
                             <DataGridTextColumn x:Name="OlvasoNevColumn" Binding="{Binding OlvasoNev}" Header="Név" CanUserReorder="False"/>
@@ -64,7 +64,7 @@
             </TabItem>
             <TabItem x:Name="KolcsonzesekTabElement" Header="Kölcsönzések listája">
                 <Grid Background="White">
-                    <DataGrid x:Name="Kolcsonzesek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Kolcsonzesek_CellEditEnding" Loaded="Kolcsonzesek_Loaded">
+                    <DataGrid x:Name="Kolcsonzesek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserResizeRows="False" CellEditEnding="Kolcsonzesek_CellEditEnding" SelectionChanged="Kolcsonzesek_SelectionChanged" CanUserAddRows="False" CanUserDeleteRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn x:Name="KolcsonzesIDColumn" Binding="{Binding KolcsonzesID}" Header="Kölcsönzés ID-je" SortDirection="Ascending" CanUserReorder="False"/>
                             <DataGridTextColumn x:Name="KolcsonzesOlvIDColumn" Binding="{Binding OlvasoID}" Header="Kölcsönző ID-je" CanUserReorder="False"/>
