@@ -86,6 +86,11 @@ namespace KonyvtariNyilvantarto
             KolcsonzesDatuma = resz[3];
             VisszavetelDatuma = resz[4];
         }
+
+        public Kolcsonzesek()
+        {
+
+        }
     }
 
     public partial class MainWindow : Window
@@ -93,8 +98,16 @@ namespace KonyvtariNyilvantarto
         List<Konyvek> konyvek = new List<Konyvek>();
         List<Kolcsonzok> kolcsonzok = new List<Kolcsonzok>();
         List<Kolcsonzesek> kolcsonzesek = new List<Kolcsonzesek>();
+        List<Konyvek> konyvKeresesEredmeny = new List<Konyvek>();
+        List<Kolcsonzesek> kolcsonzokKeresesEredmeny = new List<Kolcsonzesek>();
+        List<int> konyvIDk = new List<int>();
+        List<int> kolcsonzoIDk = new List<int>();
         bool mentetlen = false;
         bool kolcsonzoIrSzamOK = false;
+        bool kolcsonzesKolcsIDOK = false;
+        bool kolcsonzesKonyvIDOK = false;
+        bool kezdetDatumOK = false;
+        bool vegDatumOK = true;
 
         public MainWindow()
         {
@@ -114,6 +127,14 @@ namespace KonyvtariNyilvantarto
             Konyvek.DataContext = konyvek;
             Kolcsonzok.DataContext = kolcsonzok;
             Kolcsonzesek.DataContext = kolcsonzesek;
+            foreach (var item in konyvek)
+            {
+                konyvIDk.Add(item.KonyvID);
+            }
+            foreach (var item in kolcsonzok)
+            {
+                kolcsonzoIDk.Add(item.OlvasoID);
+            }
         }
 
         private void MindenMenteseButton_Click(object sender, RoutedEventArgs e)
@@ -127,6 +148,11 @@ namespace KonyvtariNyilvantarto
             KonyvekMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
             mentetlen = true;
+            konyvIDk.Clear();
+            foreach (var item in konyvek)
+            {
+                konyvIDk.Add(item.KonyvID);
+            }
         }
 
         private void Konyvek_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -190,7 +216,11 @@ namespace KonyvtariNyilvantarto
             KonyvekMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
             mentetlen = true;
-
+            konyvIDk.Clear();
+            foreach (var item in konyvek)
+            {
+                konyvIDk.Add(item.KonyvID);
+            }
         }
 
         private void KonyvHozzaadasaMegseGomb_Click(object sender, RoutedEventArgs e)
@@ -218,10 +248,20 @@ namespace KonyvtariNyilvantarto
                 KonyvekMenteseButton.IsEnabled = true;
                 MindenMenteseButton.IsEnabled = true;
                 mentetlen = true;
+                konyvIDk.Clear();
+                foreach (var item in konyvek)
+                {
+                    konyvIDk.Add(item.KonyvID);
+                }
             }
         }
 
         private void KonyvekMenteseButton_Click(object sender, RoutedEventArgs e)
+        {
+            KonyvekMentese();
+        }
+
+        public void KonyvekMentese()
         {
             StreamWriter sw = new StreamWriter("./konyvek.txt");
             foreach (var item in konyvek)
@@ -241,6 +281,11 @@ namespace KonyvtariNyilvantarto
             KolcsonzokMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
             mentetlen = true;
+            kolcsonzoIDk.Clear();
+            foreach (var item in kolcsonzok)
+            {
+                kolcsonzoIDk.Add(item.OlvasoID);
+            }
         }
 
         private void Kolcsonzok_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -252,6 +297,14 @@ namespace KonyvtariNyilvantarto
             else
             {
                 KolcsonzoTorleseButton.IsEnabled = false;
+            }
+            if (Kolcsonzok.SelectedItems.Count == 1)
+            {
+                KolcsonzoKolcsonzeseiButton.IsEnabled = true;
+            }
+            else
+            {
+                KolcsonzoKolcsonzeseiButton.IsEnabled = false;
             }
         }
 
@@ -326,6 +379,11 @@ namespace KonyvtariNyilvantarto
             KolcsonzokMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
             mentetlen = true;
+            kolcsonzoIDk.Clear();
+            foreach (var item in kolcsonzok)
+            {
+                kolcsonzoIDk.Add(item.OlvasoID);
+            }
         }
 
         private void KolcsonzoFelvetelMegseButton_Click(object sender, RoutedEventArgs e)
@@ -353,15 +411,52 @@ namespace KonyvtariNyilvantarto
                 KolcsonzokMenteseButton.IsEnabled = true;
                 MindenMenteseButton.IsEnabled = true;
                 mentetlen = true;
+                kolcsonzoIDk.Clear();
+                foreach (var item in kolcsonzok)
+                {
+                    kolcsonzoIDk.Add(item.OlvasoID);
+                }
             }
         }
 
         private void KolcsonzoKolcsonzeseiButton_Click(object sender, RoutedEventArgs e)
         {
+            KeresesTabElement.IsSelected = true;
+            KolcsonzokRadio.IsChecked = true;
+            KolcsonzokKeresesBox.Text = Convert.ToString(kolcsonzok[Kolcsonzok.SelectedIndex].OlvasoID);
+            konyvKeresesEredmeny.Clear();
+            kolcsonzokKeresesEredmeny.Clear();
+            KolcsonzesKereses.DataContext = null;
+            foreach (var item in kolcsonzesek)
+            {
+                try
+                {
+                    if (item.OlvasoID == Convert.ToInt32(KolcsonzokKeresesBox.Text))
+                    {
+                        kolcsonzokKeresesEredmeny.Add(item);
+                    }
+                }
+                catch
+                {
 
+                }
+                Ures.Visibility = Visibility.Hidden;
+                KonyvKereses.Visibility = Visibility.Hidden;
+                KolcsonzesKereses.DataContext = kolcsonzokKeresesEredmeny;
+                KolcsonzesKereses.Visibility = Visibility.Visible;
+            }
+            if (kolcsonzokKeresesEredmeny.Count == 0 && konyvKeresesEredmeny.Count == 0)
+            {
+                MessageBox.Show("Nincs ilyen kölcsönzés.", "Nincs találat");
+            }
         }
 
         private void KolcsonzokMenteseButton_Click(object sender, RoutedEventArgs e)
+        {
+            KolcsonzokMentese();
+        }
+
+        public void KolcsonzokMentese()
         {
             StreamWriter sw = new StreamWriter("./tagok.txt");
             foreach (var item in kolcsonzok)
@@ -377,77 +472,316 @@ namespace KonyvtariNyilvantarto
 
         private void Kolcsonzesek_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-
+            kolcsonzesek[Kolcsonzesek.SelectedIndex] = (Kolcsonzesek)Kolcsonzesek.SelectedItem;
+            KolcsonzesekMenteseButton.IsEnabled = true;
+            MindenMenteseButton.IsEnabled = true;
+            mentetlen = true;
         }
 
         private void Kolcsonzesek_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (Kolcsonzesek.SelectedItems.Count != 0)
+            {
+                KolcsonzesTorleseButton.IsEnabled = true;
+            }
+            else
+            {
+                KolcsonzesTorleseButton.IsEnabled = false;
+            }
         }
 
         private void KolcsonzesKonyvIDBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            try
+            {
+                if (konyvIDk.Contains(Convert.ToInt32(KolcsonzesKonyvIDBox.Text)) && KolcsonzesKonyvIDBox.Text != "")
+                {
+                    kolcsonzesKonyvIDOK = true;
+                }
+                else
+                {
+                    kolcsonzesKonyvIDOK = false;
+                }
+            }
+            catch
+            {
+                kolcsonzesKonyvIDOK = false;
+            }
+            KolcsonzesHozzaadasaEngedely();
         }
 
         private void KolcsonzesKolcsonzoIDBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            try
+            {
+                if (kolcsonzoIDk.Contains(Convert.ToInt32(KolcsonzesKolcsonzoIDBox.Text)) && KolcsonzesKolcsonzoIDBox.Text != "")
+                {
+                    kolcsonzesKolcsIDOK = true;
+                }
+                else
+                {
+                    kolcsonzesKolcsIDOK = false;
+                }
+            }
+            catch
+            {
+                kolcsonzesKolcsIDOK = false;
+            }
+            KolcsonzesHozzaadasaEngedely();
+        }
 
+        private void KolcsonzesKezdeteBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (DateTime.TryParse(KolcsonzesKezdeteBox.Text, out _))
+            {
+                kezdetDatumOK = true;
+                KolcsonzesVegeBox.IsEnabled = true;
+            }
+            else
+            {
+                kezdetDatumOK = false;
+                KolcsonzesVegeBox.IsEnabled = false;
+            }
+            KolcsonzesHozzaadasaEngedely();
+        }
+
+        private void KolcsonzesVegeBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (DateTime.TryParse(KolcsonzesVegeBox.Text, out _) || KolcsonzesVegeBox.Text == "")
+            {
+                vegDatumOK = true;
+            }
+            else
+            {
+                vegDatumOK = false;
+            }
+            KolcsonzesHozzaadasaEngedely();
+        }
+
+        public void KolcsonzesHozzaadasaEngedely()
+        {
+            if (kolcsonzesKolcsIDOK && kolcsonzesKonyvIDOK && kezdetDatumOK && vegDatumOK)
+            {
+                KolcsonzesFelveteleButton.IsEnabled = true;
+            }
+            else
+            {
+                KolcsonzesFelveteleButton.IsEnabled = false;
+            }
+            if (KolcsonzesKolcsonzoIDBox.Text != "" || KolcsonzesKonyvIDBox.Text != "" || KolcsonzesVegeBox.Text != "" || KolcsonzesKezdeteBox.Text != "")
+            {
+                KolcsonzesFelveteleMegseButton.IsEnabled = true;
+            }
+            else
+            {
+                KolcsonzesFelveteleMegseButton.IsEnabled = false;
+            }
         }
 
         private void KolcsonzesFelveteleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Kolcsonzesek.DataContext = null;
+            if (KolcsonzesVegeBox.Text == "")
+            {
+                kolcsonzesek.Add(new Kolcsonzesek() { KolcsonzesID = kolcsonzesek[kolcsonzesek.Count - 1].KolcsonzesID + 1, OlvasoID = Convert.ToInt32(KolcsonzesKolcsonzoIDBox.Text), KonyvID = Convert.ToInt32(KolcsonzesKonyvIDBox.Text), KolcsonzesDatuma = KolcsonzesKezdeteBox.Text, VisszavetelDatuma = "" });
+            }
+            else
+            {
+                kolcsonzesek.Add(new Kolcsonzesek() { KolcsonzesID = kolcsonzesek[kolcsonzesek.Count - 1].KolcsonzesID + 1, OlvasoID = Convert.ToInt32(KolcsonzesKolcsonzoIDBox.Text), KonyvID = Convert.ToInt32(KolcsonzesKonyvIDBox.Text), KolcsonzesDatuma = KolcsonzesKezdeteBox.Text, VisszavetelDatuma = KolcsonzesVegeBox.Text });
+            }
+            Kolcsonzesek.DataContext = kolcsonzesek;
+            KolcsonzesKonyvIDBox.Text = "";
+            KolcsonzesKolcsonzoIDBox.Text = "";
+            KolcsonzesVegeBox.Text = "";
+            KolcsonzesKezdeteBox.Text = "";
+            KolcsonzesFelveteleButton.IsEnabled = false;
+            KolcsonzesFelveteleMegseButton.IsEnabled = false;
+            KolcsonzesekMenteseButton.IsEnabled = true;
+            MindenMenteseButton.IsEnabled = true;
+            mentetlen = true;
         }
 
         private void KolcsonzesFelveteleMegseButton_Click(object sender, RoutedEventArgs e)
         {
-
+            KolcsonzesKonyvIDBox.Text = "";
+            KolcsonzesKolcsonzoIDBox.Text = "";
+            KolcsonzesVegeBox.Text = "";
+            KolcsonzesKezdeteBox.Text = "";
+            KolcsonzesFelveteleButton.IsEnabled = false;
+            KolcsonzesFelveteleMegseButton.IsEnabled = false;
         }
 
         private void KolcsonzesTorleseButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult mbr = MessageBox.Show("Ezzel eltávolítja a kijelölt kölcsönzést a listából. Ezt csak ebben az esetben tegye meg, ha a kölcsönzés hibás adatokat tartalmaz, vagy felesleges sort adott hozzá", "Figyelem!", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+            if (mbr == MessageBoxResult.OK)
+            {
+                foreach (var item in Kolcsonzesek.SelectedItems)
+                {
+                    kolcsonzesek.Remove((Kolcsonzesek)item);
+                }
+                Kolcsonzesek.DataContext = null;
+                Kolcsonzesek.DataContext = kolcsonzesek;
+                KolcsonzesekMenteseButton.IsEnabled = true;
+                MindenMenteseButton.IsEnabled = true;
+                mentetlen = true;
+            }
         }
 
         private void KolcsonzesekMenteseButton_Click(object sender, RoutedEventArgs e)
         {
+            KolcsonzesekMentese();
+        }
 
+        public void KolcsonzesekMentese()
+        {
+            StreamWriter sw = new StreamWriter("./kolcsonzesek.txt");
+            foreach (var item in kolcsonzesek)
+            {
+                sw.WriteLine(item.KolcsonzesID + ";" + item.OlvasoID + ";" + item.KonyvID + ";" + item.KolcsonzesDatuma + ";" + item.VisszavetelDatuma);
+            }
+            sw.Close();
+            sw.Dispose();
+            KolcsonzesekMenteseButton.IsEnabled = false;
+            MindenMenteseButton.IsEnabled = false;
+            mentetlen = false;
         }
 
         private void KonyvekRadio_Checked(object sender, RoutedEventArgs e)
         {
-
+            CimRadio.IsEnabled = true;
+            SzerzoRadio.IsEnabled = true;
+            KolcsonzokKeresesBox.Text = "";
+            KolcsonzokKeresesBox.IsEnabled = false;
         }
 
         private void CimRadio_Checked(object sender, RoutedEventArgs e)
         {
-
+            KonyvekKeresesBox.IsEnabled = true;
         }
 
         private void SzerzoRadio_Checked(object sender, RoutedEventArgs e)
         {
-
+            KonyvekKeresesBox.IsEnabled = true;
         }
 
         private void KonyvekKeresesBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (KonyvekKeresesBox.Text != "")
+            {
+                KeresesButton.IsEnabled = true;
+            }
+            else
+            {
+                KeresesButton.IsEnabled = false;
+            }
         }
 
         private void KolcsonzokRadio_Checked(object sender, RoutedEventArgs e)
         {
-
+            CimRadio.IsChecked = false;
+            CimRadio.IsEnabled = false;
+            SzerzoRadio.IsChecked = false;
+            SzerzoRadio.IsEnabled = false;
+            KonyvekKeresesBox.Text = "";
+            KonyvekKeresesBox.IsEnabled = false;
+            KolcsonzokKeresesBox.IsEnabled = true;
         }
 
         private void KolcsonzokKeresesBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (KolcsonzokKeresesBox.Text != "" && kolcsonzoIDk.Contains(Convert.ToInt32(KolcsonzokKeresesBox.Text)))
+            {
+                KeresesButton.IsEnabled = true;
+            }
+            else
+            {
+                KeresesButton.IsEnabled = false;
+            }
         }
 
         private void KeresesButton_Click(object sender, RoutedEventArgs e)
         {
+            konyvKeresesEredmeny.Clear();
+            kolcsonzokKeresesEredmeny.Clear();
+            KonyvKereses.DataContext = null;
+            KolcsonzesKereses.DataContext = null;
+            if (CimRadio.IsChecked == true)
+            {
+                foreach (var item in konyvek)
+                {
+                    try
+                    {
+                        if (item.KonyvCime.Contains(KonyvekKeresesBox.Text))
+                        {
+                            konyvKeresesEredmeny.Add(item);
+                        }
+                    }
+                    catch
+                    {
 
+                    }
+                }
+                Ures.Visibility = Visibility.Hidden;
+                KolcsonzesKereses.Visibility = Visibility.Hidden;
+                KonyvKereses.DataContext = konyvKeresesEredmeny;
+                KonyvKereses.Visibility = Visibility.Visible;
+            }
+            else if (SzerzoRadio.IsChecked == true)
+            {
+                foreach (var item in konyvek)
+                {
+                    try
+                    {
+                        if (item.KonyvSzerzo.Contains(KonyvekKeresesBox.Text))
+                        {
+                            konyvKeresesEredmeny.Add(item);
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                Ures.Visibility = Visibility.Hidden;
+                KolcsonzesKereses.Visibility = Visibility.Hidden;
+                KonyvKereses.DataContext = konyvKeresesEredmeny;
+                KonyvKereses.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                foreach (var item in kolcsonzesek)
+                {
+                    try
+                    {
+                        if (item.OlvasoID == Convert.ToInt32(KolcsonzokKeresesBox.Text))
+                        {
+                            kolcsonzokKeresesEredmeny.Add(item);
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                Ures.Visibility = Visibility.Hidden;
+                KonyvKereses.Visibility = Visibility.Hidden;
+                KolcsonzesKereses.DataContext = kolcsonzokKeresesEredmeny;
+                KolcsonzesKereses.Visibility = Visibility.Visible;
+            }
+            if (kolcsonzokKeresesEredmeny.Count == 0 && KolcsonzokKeresesBox.Text != "")
+            {
+                MessageBox.Show("Nincs ilyen kölcsönzés.", "Nincs találat");
+            }
+            if (konyvKeresesEredmeny.Count == 0 && KonyvekKeresesBox.Text != "")
+            {
+                MessageBox.Show("Nincs ilyen könyv. Próbáljon kis- és nagybetűs keresést is, és ellenőrizze, hogy jól gépelte-e be a keresett kulcsszavakat.", "Nincs találat");
+            }
+        }
+
+        private void Kereses_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = true;
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -468,7 +802,9 @@ namespace KonyvtariNyilvantarto
 
         public void MindenMentese()
         {
-
+            KonyvekMentese();
+            KolcsonzokMentese();
+            KolcsonzesekMentese();
         }
     }
 }

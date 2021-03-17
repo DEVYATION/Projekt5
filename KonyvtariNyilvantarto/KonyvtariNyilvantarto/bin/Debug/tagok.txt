@@ -209,3 +209,4 @@
 209;Török Diána;1977.09.01.;9766;Zsennye;Skalnitzky Antal utca 71.
 210;Jakab Virág;1988.11.17.;2011;Budakalász;Lövész utca 291.
 211;Boross Máté;2021.01.14;4200;Hajdúszoboszló;Szívós utca 9/A
+212;a;a;0;a;b
