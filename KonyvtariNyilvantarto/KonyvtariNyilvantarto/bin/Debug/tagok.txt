@@ -17,7 +17,6 @@
 17;Horváth Nikolett;1952.01.22.;9707;Szombathely;Bellegelői út 9.
 18;Balog Zsigmond;1973.08.25.;3385;Tiszanána;Juhfark utca 56.
 19;Lengyel Lili;2005.04.13.;2316;Tököl;Herold István utca 9.
-20;Katona Dalma;1950.03.22.;6120;Kiskunmajsa;Borzán Gáspár utca 63.
 21;Juhász Bella;1981.08.07.;7551;Lábod;Vasutas utca 197.
 22;Szalai Annabella;1976.06.08.;3997;Füzérkomlós;Kéky Lajos utca 97.
 23;Tóth Liliána;1954.10.06.;8991;Teskánd;Fillér utca 59.
@@ -208,5 +207,3 @@
 208;Dudás Arnold;1968.02.20.;8978;Rédics;Erdőszél utca 62.
 209;Török Diána;1977.09.01.;9766;Zsennye;Skalnitzky Antal utca 71.
 210;Jakab Virág;1988.11.17.;2011;Budakalász;Lövész utca 291.
-211;Boross Máté;2021.01.14;4200;Hajdúszoboszló;Szívós utca 9/A
-212;a;a;0;a;b

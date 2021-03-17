@@ -102,7 +102,10 @@ namespace KonyvtariNyilvantarto
         List<Kolcsonzesek> kolcsonzokKeresesEredmeny = new List<Kolcsonzesek>();
         List<int> konyvIDk = new List<int>();
         List<int> kolcsonzoIDk = new List<int>();
-        bool mentetlen = false;
+        bool konyvekMentetlen = false;
+        bool kolcsonzokMentetlen = false;
+        bool kolcsonzesekMentetlen = false;
+        bool mindenMentetlen = false;
         bool kolcsonzoIrSzamOK = false;
         bool kolcsonzesKolcsIDOK = false;
         bool kolcsonzesKonyvIDOK = false;
@@ -147,7 +150,8 @@ namespace KonyvtariNyilvantarto
             konyvek[Konyvek.SelectedIndex] = (Konyvek)Konyvek.SelectedItem;
             KonyvekMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
-            mentetlen = true;
+            konyvekMentetlen = true;
+            mindenMentetlen = true;
             konyvIDk.Clear();
             foreach (var item in konyvek)
             {
@@ -215,7 +219,8 @@ namespace KonyvtariNyilvantarto
             KonyvHozzaadasaMegseGomb.IsEnabled = false;
             KonyvekMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
-            mentetlen = true;
+            konyvekMentetlen = true;
+            mindenMentetlen = true;
             konyvIDk.Clear();
             foreach (var item in konyvek)
             {
@@ -247,7 +252,8 @@ namespace KonyvtariNyilvantarto
                 Konyvek.DataContext = konyvek;
                 KonyvekMenteseButton.IsEnabled = true;
                 MindenMenteseButton.IsEnabled = true;
-                mentetlen = true;
+                konyvekMentetlen = true;
+                mindenMentetlen = true;
                 konyvIDk.Clear();
                 foreach (var item in konyvek)
                 {
@@ -271,8 +277,12 @@ namespace KonyvtariNyilvantarto
             sw.Close();
             sw.Dispose();
             KonyvekMenteseButton.IsEnabled = false;
-            MindenMenteseButton.IsEnabled = false;
-            mentetlen = false;
+            konyvekMentetlen = false;
+            if (!kolcsonzesekMentetlen && !kolcsonzokMentetlen && !konyvekMentetlen)
+            {
+                MindenMenteseButton.IsEnabled = false;
+                mindenMentetlen = false;
+            }
         }
 
         private void Kolcsonzok_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -280,7 +290,8 @@ namespace KonyvtariNyilvantarto
             kolcsonzok[Kolcsonzok.SelectedIndex] = (Kolcsonzok)Kolcsonzok.SelectedItem;
             KolcsonzokMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
-            mentetlen = true;
+            kolcsonzokMentetlen = true;
+            mindenMentetlen = true;
             kolcsonzoIDk.Clear();
             foreach (var item in kolcsonzok)
             {
@@ -378,7 +389,8 @@ namespace KonyvtariNyilvantarto
             KolcsonzoFelvetelMegseButton.IsEnabled = false;
             KolcsonzokMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
-            mentetlen = true;
+            kolcsonzokMentetlen = true;
+            mindenMentetlen = true;
             kolcsonzoIDk.Clear();
             foreach (var item in kolcsonzok)
             {
@@ -410,7 +422,8 @@ namespace KonyvtariNyilvantarto
                 Kolcsonzok.DataContext = kolcsonzok;
                 KolcsonzokMenteseButton.IsEnabled = true;
                 MindenMenteseButton.IsEnabled = true;
-                mentetlen = true;
+                kolcsonzokMentetlen = true;
+                mindenMentetlen = true;
                 kolcsonzoIDk.Clear();
                 foreach (var item in kolcsonzok)
                 {
@@ -466,8 +479,12 @@ namespace KonyvtariNyilvantarto
             sw.Close();
             sw.Dispose();
             KolcsonzokMenteseButton.IsEnabled = false;
-            MindenMenteseButton.IsEnabled = false;
-            mentetlen = false;
+            kolcsonzokMentetlen = false;
+            if (!kolcsonzesekMentetlen && !kolcsonzokMentetlen && !konyvekMentetlen)
+            {
+                MindenMenteseButton.IsEnabled = false;
+                mindenMentetlen = false;
+            }
         }
 
         private void Kolcsonzesek_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -475,7 +492,8 @@ namespace KonyvtariNyilvantarto
             kolcsonzesek[Kolcsonzesek.SelectedIndex] = (Kolcsonzesek)Kolcsonzesek.SelectedItem;
             KolcsonzesekMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
-            mentetlen = true;
+            kolcsonzesekMentetlen = true;
+            mindenMentetlen = true;
         }
 
         private void Kolcsonzesek_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -598,7 +616,8 @@ namespace KonyvtariNyilvantarto
             KolcsonzesFelveteleMegseButton.IsEnabled = false;
             KolcsonzesekMenteseButton.IsEnabled = true;
             MindenMenteseButton.IsEnabled = true;
-            mentetlen = true;
+            kolcsonzesekMentetlen = true;
+            mindenMentetlen = true;
         }
 
         private void KolcsonzesFelveteleMegseButton_Click(object sender, RoutedEventArgs e)
@@ -624,7 +643,8 @@ namespace KonyvtariNyilvantarto
                 Kolcsonzesek.DataContext = kolcsonzesek;
                 KolcsonzesekMenteseButton.IsEnabled = true;
                 MindenMenteseButton.IsEnabled = true;
-                mentetlen = true;
+                kolcsonzesekMentetlen = true;
+                mindenMentetlen = true;
             }
         }
 
@@ -643,8 +663,12 @@ namespace KonyvtariNyilvantarto
             sw.Close();
             sw.Dispose();
             KolcsonzesekMenteseButton.IsEnabled = false;
-            MindenMenteseButton.IsEnabled = false;
-            mentetlen = false;
+            kolcsonzesekMentetlen = false;
+            if (!kolcsonzesekMentetlen && !kolcsonzokMentetlen && !konyvekMentetlen)
+            {
+                MindenMenteseButton.IsEnabled = false;
+                mindenMentetlen = false;
+            }
         }
 
         private void KonyvekRadio_Checked(object sender, RoutedEventArgs e)
@@ -786,7 +810,7 @@ namespace KonyvtariNyilvantarto
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (mentetlen == true)
+            if (mindenMentetlen == true)
             {
                 MessageBoxResult mbr = MessageBox.Show("Nem mentette el a munkáját. Szeretné menteni a munkáját?", "Figyelem!", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
                 if (mbr == MessageBoxResult.Yes)
@@ -805,6 +829,8 @@ namespace KonyvtariNyilvantarto
             KonyvekMentese();
             KolcsonzokMentese();
             KolcsonzesekMentese();
+            mindenMentetlen = false;
+            MindenMenteseButton.IsEnabled = false;
         }
     }
 }
