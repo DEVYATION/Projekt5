@@ -736,7 +736,7 @@ namespace KonyvtariNyilvantarto
                 {
                     try
                     {
-                        if (item.KonyvCime.Contains(KonyvekKeresesBox.Text))
+                        if (item.KonyvCime.ToLower().Contains(KonyvekKeresesBox.Text.ToLower()))
                         {
                             konyvKeresesEredmeny.Add(item);
                         }
@@ -757,7 +757,7 @@ namespace KonyvtariNyilvantarto
                 {
                     try
                     {
-                        if (item.KonyvSzerzo.Contains(KonyvekKeresesBox.Text))
+                        if (item.KonyvSzerzo.ToLower().Contains(KonyvekKeresesBox.Text.ToLower()))
                         {
                             konyvKeresesEredmeny.Add(item);
                         }
@@ -799,7 +799,7 @@ namespace KonyvtariNyilvantarto
             }
             if (konyvKeresesEredmeny.Count == 0 && KonyvekKeresesBox.Text != "")
             {
-                MessageBox.Show("Nincs ilyen könyv. Próbáljon kis- és nagybetűs keresést is, és ellenőrizze, hogy jól gépelte-e be a keresett kulcsszavakat.", "Nincs találat");
+                MessageBox.Show("Nincs ilyen könyv. Ellenőrizze, hogy jól gépelte-e be a keresett kulcsszavakat.", "Nincs találat");
             }
         }
 

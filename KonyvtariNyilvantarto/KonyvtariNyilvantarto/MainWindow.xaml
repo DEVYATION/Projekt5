@@ -121,21 +121,6 @@
                     <Button x:Name="KeresesButton" Content="Keresés" HorizontalAlignment="Left" Margin="815,335,0,0" VerticalAlignment="Top" Width="110" Height="50" FontSize="18" IsEnabled="False" Click="KeresesButton_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="LejartTabElement" Header="Lejárt kölcsönzések">
-                <Grid Background="White">
-                    <DataGrid x:Name="LejartKolcsonzesek" HorizontalAlignment="Left" Height="530" Margin="10,21,0,0" VerticalAlignment="Top" Width="800" ItemsSource="{Binding}" AutoGenerateColumns="True" CanUserResizeRows="False" IsEnabled="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding LejartKolcsonzesID}" Header="Kölcsönzés ID-je" SortDirection="Ascending" CanUserReorder="False"/>
-                            <DataGridTextColumn Binding="{Binding LejartOlvasoID}" Header="Kölcsönző ID-je" CanUserReorder="False"/>
-                            <DataGridTextColumn Binding="{Binding LejartKonyvID}" Header="Könyv ID-je" CanUserReorder="False"/>
-                            <DataGridTextColumn Binding="{Binding LejartKolcsonzesDatuma}" Header="Kölcsönzés dátuma" CanUserReorder="False"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <TextBlock HorizontalAlignment="Left" Margin="815,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="49" Width="339"><Run Text="Egy kölcsönzés"/><Run Text=" akkor"/><Run Text=" jár le, ha harminc napja lett kiadva a könyv, és még nem lett visszaadva."/><Run Text=" Ez a lista automatikusan bővül."/></TextBlock>
-                    <Label Content="Lejárt kölcsönzések" HorizontalAlignment="Left" Margin="815,21,0,0" VerticalAlignment="Top" FontSize="24"/>
-                </Grid>
-            </TabItem>
         </TabControl>
-
     </Grid>
 </Window>
